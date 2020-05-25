@@ -66,7 +66,7 @@ namespace QUANLYCUAHANG
         }
         public static void output()
         {
-            if ()
+            if (true)
         }
     }
 }
