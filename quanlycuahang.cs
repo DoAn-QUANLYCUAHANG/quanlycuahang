@@ -9,8 +9,13 @@ namespace QUANLYCUAHANG
         static void Main(string[] args)
         {
             string select = input();
-            List<>
-            output(select);
+            List<Items> data = new List<Items>();
+            if (select[0] == 1)
+            {
+                Items items = new Items();
+                output(select, items);
+            }
+            
         }
         public static string input()
         {
@@ -74,10 +79,72 @@ namespace QUANLYCUAHANG
             return select;
         }
 
-        public static void output(string select)
+        public static void output(string select, Items items)
         {
             Console.WriteLine("{0}",select);
+            if (select[0] == '1')
+            {
+                switch (select[1])
+                {
+                    case '1':
+                        addItems(items);
+                        break;
+                    case '2':
+                        removeItems(items);
+                        break;
+                    case '3':
+                        editItems(items);
+                        break;
+                    case '4':
+                        searchItems(items);
+                        break;
+                }
+            }
             Console.ReadLine();
         }
+        public static void addItems(Items items)
+        {
+            Console.WriteLine("Input the itemCode");
+            int temp1 = Convert.ToInt32(Console.ReadLine());
+            items.itemCode = temp1;
+            Console.WriteLine("Input the nameItems");
+            string temp2 = Console.ReadLine();
+            items.nameItem = temp2;
+            Console.WriteLine("Input the dataexpiryDate");
+            DateTime temp3 = Convert.ToDateTime(Console.ReadLine());
+            items.dataexpiryDate = temp3;
+            Console.WriteLine("Input the companyProduct");
+            temp2 = Console.ReadLine();
+            items.nameItem = temp2;
+            Console.WriteLine("Input the typeOfProduct");
+            temp1 = Convert.ToInt32(Console.ReadLine());
+            items.itemCode = temp1;
+            Console.WriteLine("Input the codeTypeOfItems and nameTypeOfItems");
+            temp1 = Convert.ToInt32(Console.ReadLine());
+            temp2 = Console.ReadLine();
+            items.typeOfProduct.Add(temp1,temp2);
+        }
+        public static void removeItems(Items items)
+        {
+
+        }
+        public static void editItems(Items items)
+        {
+
+        }
+        public static void searchItems(Items items)
+        {
+
+        }
     }
+    class Items
+    {
+        public int itemCode;
+        public string nameItem;
+        public DateTime dataexpiryDate;
+        public string companyProduct;
+        public int yearOfProduction;
+        public Dictionary<int, string> typeOfProduct = new Dictionary<int, string>();
+    }
+    
 }
