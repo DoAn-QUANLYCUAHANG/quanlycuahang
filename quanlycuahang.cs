@@ -15,7 +15,6 @@ namespace QUANLYCUAHANG
                 Items items = new Items();
                 output(select, items);
             }
-            
         }
         public static string input()
         {
@@ -130,11 +129,17 @@ namespace QUANLYCUAHANG
         }
         public static void editItems(Items items)
         {
-
+            removeItems(items);
+            Console.WriteLine("Input the edit information ");
+            addItems(items);
         }
         public static void searchItems(Items items)
         {
 
+        }
+        public static void show (List<Items> items)
+        {
+            
         }
     }
     class Items
