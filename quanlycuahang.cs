@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 
 namespace QUANLYCUAHANG
@@ -7,9 +8,11 @@ namespace QUANLYCUAHANG
     {
         static void Main(string[] args)
         {
-            int select = input();
+            string select = input();
+            List<>
+            output(select);
         }
-        public static int input()
+        public static string input()
         {
             Console.WriteLine("WELCOME");
             Console.WriteLine("Please select the function");
@@ -27,9 +30,11 @@ namespace QUANLYCUAHANG
                 }
                 else Console.WriteLine("Please select again");
             }
+            select = string.Concat(select, selectFuntion.ToString());
             if (selectFuntion == 1)
             {
                 check = true;
+                int selectItems = 0;
                 while (check)
                 {
                     Console.WriteLine("Please select: ");
@@ -37,17 +42,19 @@ namespace QUANLYCUAHANG
                     Console.WriteLine("2. Remove the item");
                     Console.WriteLine("3. Edit the item");
                     Console.WriteLine("4. Search the item");
-                    int selectItems = Convert.ToInt32(Console.ReadLine());
-                    if (selectItems > 4 || selectItems < 0)
+                    selectItems = Convert.ToInt32(Console.ReadLine());
+                    if (selectItems < 4 && selectItems > 0)
                     {
                         check = false;
                     }
                     else Console.WriteLine("Please select again");
                 }
+                select = string.Concat(select, selectItems.ToString());
             }
             else if (selectFuntion == 2)
             {
                 check = true;
+                int selectTypeOfItems = 0;
                 while (check)
                 {
                     Console.WriteLine("Please select: ");
@@ -55,18 +62,22 @@ namespace QUANLYCUAHANG
                     Console.WriteLine("2. Remove the type of item");
                     Console.WriteLine("3. Edit the type of item");
                     Console.WriteLine("4. Search the type of item");
-                    int selectTypeOfItems = Convert.ToInt32(Console.ReadLine());
-                    if (selectTypeOfItems > 4 || selectTypeOfItems < 0)
+                    selectTypeOfItems = Convert.ToInt32(Console.ReadLine());
+                    if (selectTypeOfItems < 4 && selectTypeOfItems > 0)
                     {
                         check = false;
                     }
                     else Console.WriteLine("Please select again");
                 }
+                select = string.Concat(select, selectTypeOfItems.ToString());
             }
+            return select;
         }
-        public static void output()
+
+        public static void output(string select)
         {
-            if (false)
+            Console.WriteLine("{0}",select);
+            Console.ReadLine();
         }
     }
 }
