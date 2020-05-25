@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.Design;
 
 namespace QUANLYCUAHANG
 {
@@ -6,16 +7,17 @@ namespace QUANLYCUAHANG
     {
         static void Main(string[] args)
         {
-            input();
+            int select = input();
         }
-        public static void input()
+        public static int input()
         {
             Console.WriteLine("WELCOME");
             Console.WriteLine("Please select the function");
             bool check = true;
             int selectFuntion = 0;
+            string select = "";
             while (check)
-            {
+            {   
                 Console.WriteLine("1. Function of Items");
                 Console.WriteLine("2. Function of Type of Items");
                 selectFuntion = Convert.ToInt32(Console.ReadLine());
@@ -61,6 +63,10 @@ namespace QUANLYCUAHANG
                     else Console.WriteLine("Please select again");
                 }
             }
+        }
+        public static void output()
+        {
+            if ()
         }
     }
 }
