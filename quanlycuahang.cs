@@ -14,17 +14,20 @@ namespace QUANLYCUAHANG
             List<Items> data = new List<Items>();
             while (check)
             {
-                if (select[0] == 1)
+                if (select[0] == '1')
                 {
-                    Items items = new Items();
-                    data = resovle(select);
-                    show(data);
+                    //Items items = new Items();
+                    resovle(select, ref data);
                 }
                 Console.WriteLine("Do you continues? <Y\t/\tN>");
                 string cha = Console.ReadLine();
-                if (cha != "Y" || cha != "N") Console.WriteLine("Y\t/\tN");
-                else if (cha == "Y") check = false;
-            }  
+                if (cha == "N") check = false;
+                else
+                {
+                    select = input();
+                }
+            }
+            Console.ReadLine();
         }
         public static string input()
         {
@@ -58,7 +61,7 @@ namespace QUANLYCUAHANG
                     Console.WriteLine("4. Search the item");
                     Console.WriteLine("5. Show the item");
                     selectItems = Convert.ToInt32(Console.ReadLine());
-                    if (selectItems < 5 && selectItems > 0)
+                    if (selectItems < 6 && selectItems > 0)
                     {
                         check = false;
                     }
@@ -89,22 +92,36 @@ namespace QUANLYCUAHANG
             return select;
         }
 
-        public static List<Items> resovle(string select)
+        public static void resovle(string select, ref List<Items> ListItems)
         {
-            List<Items> result = new List<Items>();
+            
                 switch (select[1])
                 {
-                    case '1':
-                        List<Items> add = addItems();
-                        return add;
-                    case '2':
-                        List<Items> remove =  removeItems();
-                        return remove;
-                    case '3':
-                        List<Items> edit = editItems();
-                    return edit;
+                case '1':
+                        Console.WriteLine("A\tD\tD\t");
+                        Items add = creatItems();
+                        ListItems.Add(add);
+                        break;
+                case '2':
+                        Console.WriteLine("R\tE\tM\tO\tV\tE");
+                        Items remove =  creatItems();
+                        ListItems.Remove(remove);
+                        break;
+                case '3':
+                        Console.WriteLine("E\tD\tI\tT");
+                        Items items = creatItems();
+                        ListItems.Remove(items);
+                        Items temp = creatItems();
+                        ListItems.Add(temp);
+                        break;
+                case '4':
+                    Console.WriteLine("i am coding");
+                    break;
+                case '5':
+                    Console.WriteLine("S\tH\tO\tW");
+                    show(ListItems);
+                    break;
                 } 
-            return result;
         }
 
         public static Items creatItems()
@@ -120,43 +137,15 @@ namespace QUANLYCUAHANG
             DateTime temp3 = Convert.ToDateTime(Console.ReadLine());
             item.dataexpiryDate = temp3;
             Console.WriteLine("Input the companyProduct");
-            temp2 = Console.ReadLine();
-            item.nameItem = temp2;
+            string temp4 = Console.ReadLine();
+            item.companyProduct = temp4;
+            Console.WriteLine("Input the Year Of Product");
+            temp1 = Convert.ToInt32(Console.ReadLine());
+            item.yearOfProduction = temp1;
             Console.WriteLine("Input the typeOfProduct");
-            temp1 = Convert.ToInt32(Console.ReadLine());
-            item.itemCode = temp1;
-            Console.WriteLine("Input the codeTypeOfItems and nameTypeOfItems");
-            temp1 = Convert.ToInt32(Console.ReadLine());
             temp2 = Console.ReadLine();
-            item.typeOfProduct.Add(temp1, temp2);
+            item.typeOfProduct = temp2;
             return item;
-        }
-        public static List<Items> addItems()
-        {
-            List<Items> result = new List<Items>();
-            Items items = new Items();
-            items = creatItems();
-            result.Add(items);
-            return result;
-        }
-        public static List<Items> removeItems()
-        {
-            List<Items> result = new List<Items>();
-            Items items = new Items();
-            items = creatItems();
-            result.Remove(items);
-            return result;
-        }
-        public static List<Items> editItems()
-        {
-            List<Items> result = new List<Items>();
-            Items items = new Items();
-            Console.WriteLine("Input the infortiom to edit");
-            result =  removeItems();
-            Console.WriteLine("Update the infortiom to edit");
-            result = addItems();
-            return result;
-
         }
         public static void searchItems(Items items)
         {
@@ -165,10 +154,10 @@ namespace QUANLYCUAHANG
         public static void show (List<Items> items)
         {
             Console.WriteLine("I T E M S");
-            Console.WriteLine("Code\t Name\t Dataexpiry\t Company\t Year Of Products\t TypeOfProduct");
+            Console.WriteLine("Code\t Name\t\t Dataexpiry\t\t Company\t Year Of Products\t TypeOfProduct");
             foreach(Items temp in items)
             {
-                Console.WriteLine("{0}\t {1}\t {2}\t {3}\t {4}\t {5}",temp.itemCode,temp.nameItem,temp.dataexpiryDate,temp.companyProduct,temp.yearOfProduction,temp.typeOfProduct);
+                Console.WriteLine("{0}\t {1}\t\t {2}\t\t {3}\t {4}\t {5}",temp.itemCode, temp.nameItem, temp.dataexpiryDate,temp.companyProduct,temp.yearOfProduction,temp.typeOfProduct);
             }
         }
     }
@@ -179,7 +168,7 @@ namespace QUANLYCUAHANG
         public DateTime dataexpiryDate;
         public string companyProduct;
         public int yearOfProduction;
-        public Dictionary<int, string> typeOfProduct = new Dictionary<int, string>();
+        public string typeOfProduct;
     }
     
 }
