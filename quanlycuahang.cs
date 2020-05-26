@@ -1,7 +1,9 @@
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
+using System.Reflection;
 
 namespace QUANLYCUAHANG
 {
@@ -11,18 +13,17 @@ namespace QUANLYCUAHANG
         {
             bool check = true;
             string select = input();
-            List<Items> data = new List<Items>();
+            List<Items> itemData = new List<Items>();
+            List<typeProducts> typeData = new List<typeProducts>();
             while (check)
             {
                 if (select[0] == '1')
                 { 
-                    resovle(select, ref data);
+                    resolveitem(select, ref itemData);
                 }
                 else if (select[0] == '2') 
                 {
-                    Console.WriteLine("i am coding");
-                    // Tin code in here;
-                    // select[1] = 1, 2, 3, 4, 5, view in the input function.
+                    resolvetype(select, ref typeData);
                 }
                 Console.WriteLine("Do you continues? <Y\t/\tN>");
                 string cha = Console.ReadLine();
@@ -85,8 +86,9 @@ namespace QUANLYCUAHANG
                     Console.WriteLine("2. Remove the type of item");
                     Console.WriteLine("3. Edit the type of item");
                     Console.WriteLine("4. Search the type of item");
+                    Console.WriteLine("5. Show the item");
                     selectTypeOfItems = Convert.ToInt32(Console.ReadLine());
-                    if (selectTypeOfItems < 4 && selectTypeOfItems > 0)
+                    if (selectTypeOfItems < 6 && selectTypeOfItems > 0)
                     {
                         check = false;
                     }
@@ -97,9 +99,8 @@ namespace QUANLYCUAHANG
             return select;
         }
 
-        public static void resovle(string select, ref List<Items> ListItems)
+        public static void resolveitem(string select, ref List<Items> ListItems)
         {
-            
                 switch (select[1])
                 {
                 case '1':
@@ -131,7 +132,7 @@ namespace QUANLYCUAHANG
                     break;
                 case '5':
                     Console.WriteLine("S\tH\tO\tW");
-                    show(ListItems);
+                    showitem(ListItems);
                     break;
                 } 
         }
@@ -181,7 +182,7 @@ namespace QUANLYCUAHANG
                         {
                             if (it.itemCode == temp.itemCode) codeSearch.Add(it);
                         }
-                        show(codeSearch);
+                        showitem(codeSearch);
                         break;
                     case 2:
                         Console.WriteLine("input the Name");
@@ -191,7 +192,7 @@ namespace QUANLYCUAHANG
                         {
                             if (it.nameItem == temp.nameItem) nameSearch.Add(it);
                         }
-                        show(nameSearch);
+                        showitem(nameSearch);
                         break;
                     case 3:
                         Console.WriteLine("input the Company");
@@ -201,7 +202,7 @@ namespace QUANLYCUAHANG
                         {
                             if (it.companyProduct == temp.companyProduct) CompanySearch.Add(it);
                         }
-                        show(CompanySearch);
+                        showitem(CompanySearch);
                         break;
                     case 4:
                         Console.WriteLine("input the YearOfProducts");
@@ -211,7 +212,7 @@ namespace QUANLYCUAHANG
                         {
                             if (it.yearOfProduction == temp.yearOfProduction) yearSearch.Add(it);
                         }
-                        show(yearSearch);
+                        showitem(yearSearch);
                         break;
                     case 5:
                         Console.WriteLine("input the TypeOfProducts");
@@ -221,19 +222,111 @@ namespace QUANLYCUAHANG
                         {
                             if (it.typeOfProduct == temp.typeOfProduct) typeSearch.Add(it);
                         }
-                        show(typeSearch);
+                        showitem(typeSearch);
                         break;
                 }
             }
             else searchItems(listItems);
         }
-        public static void show (List<Items> items)
+        public static void showitem (List<Items> items)
         {
             Console.WriteLine("I T E M S");
             Console.WriteLine("Code\t Name\t\t Dataexpiry\t\t Company\t Year Of Products\t TypeOfProduct");
             foreach(Items temp in items)
             {
                 Console.WriteLine("{0}\t {1}\t\t {2}\t\t {3}\t {4}\t {5}",temp.itemCode, temp.nameItem, temp.dataexpiryDate,temp.companyProduct,temp.yearOfProduction,temp.typeOfProduct);
+            }
+        }
+        public static void resolvetype(string select, ref List<typeProducts> typeData) 
+        {
+            switch (select[1])
+            {
+                case '1':
+                    Console.WriteLine("A\t\tD\t\tD\t\t");
+                    typeProducts add = creatType();
+                    typeData.Add(add);
+                    break;
+                case '2':
+                    Console.WriteLine("R\tE\tM\tO\tV\tE");
+                    typeProducts types = new typeProducts();
+                    Console.WriteLine("Input the codeItem to remove list item");
+                    types.code = Convert.ToInt32(Console.ReadLine());
+                    typeProducts index = typeData.Find(x => x.code == types.code);
+                    typeData.RemoveAt(typeData.IndexOf(index));
+                    break;
+                case '3':
+                    Console.WriteLine("E\tD\tI\tT");
+                    typeProducts types2 = new typeProducts();
+                    Console.WriteLine("Input the codeItem to edit list item");
+                    types2.code = Convert.ToInt32(Console.ReadLine());
+                    typeProducts index2 = typeData.Find(x => x.code  == types2.code);
+                    typeData.RemoveAt(typeData.IndexOf(index2));
+                    Console.WriteLine("Input the new infomation");
+                    typeProducts temp = creatType();
+                    typeData.Add(temp);
+                    break;
+                case '4':
+                    searchType(typeData);
+                    break;
+                case '5':
+                    Console.WriteLine("S\tH\tO\tW");
+                    showtype(typeData);
+                    break;
+            }
+        }
+        public static typeProducts creatType()
+        {
+            typeProducts types = new typeProducts();
+            Console.WriteLine("Input the Typpe of Code");
+            int temp1 = Convert.ToInt32(Console.ReadLine());
+            types.code = temp1;
+            Console.WriteLine("Input the Type of Name");
+            string temp2 = Console.ReadLine();
+            types.typeProduct = temp2;
+            return types;
+        }
+        public static void searchType(List<typeProducts> typeProduct)
+        {
+            Console.WriteLine("Choose the ItemCode or nameItems or...");
+            Console.WriteLine("1.Code");
+            Console.WriteLine("2.Name");
+            int choose = Convert.ToInt32(Console.ReadLine());
+            typeProducts temp = new typeProducts();
+            if (choose < 3 && choose > 0)
+            {
+                switch (choose)
+                {
+                    case 1:
+                        Console.WriteLine("input the Type of Code ");
+                        temp.code   = Convert.ToInt32(Console.ReadLine());
+                        List<typeProducts> codeSearch = new List<typeProducts>();
+                        foreach (typeProducts ty in typeProduct)
+                        {
+                            if (ty.code == temp.code) codeSearch.Add(ty);
+                        }
+                        showtype(codeSearch);
+                        break;
+                    case 2:
+                        Console.WriteLine("input the Type of Name");
+                        temp.typeProduct = Console.ReadLine();
+                        List<typeProducts> nameSearch = new List<typeProducts>();
+                        foreach (typeProducts ty in typeProduct)
+                        {
+                            if (ty.typeProduct == temp.typeProduct) nameSearch.Add(ty);
+                        }
+                        showtype(nameSearch);
+                        break;
+                }
+            }
+            else searchType(typeProduct);
+        }
+        public static void showtype(List<typeProducts> types)
+        {
+            Console.WriteLine("T Y P E O F P R O D U C T S");
+            Console.WriteLine("Code\t\t Name");
+            foreach (typeProducts temp in types)
+            {
+                Console.WriteLine("{0}\t\t {1}", temp.code, temp.typeProduct);
             }
         }
     }
@@ -246,5 +339,11 @@ namespace QUANLYCUAHANG
         public int yearOfProduction;
         public string typeOfProduct;
     }
+    class typeProducts
+    {
+        public int code;
+        public string typeProduct;
+    }
+    
     
 }
