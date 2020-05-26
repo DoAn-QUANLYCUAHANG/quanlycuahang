@@ -98,7 +98,6 @@ namespace QUANLYCUAHANG
             }
             return select;
         }
-
         public static void resolveitem(string select, ref List<Items> ListItems)
         {
                 switch (select[1])
@@ -106,7 +105,12 @@ namespace QUANLYCUAHANG
                 case '1':
                     Console.WriteLine("A\tD\tD\t");
                     Items add = creatItems();
-                    ListItems.Add(add);
+                    Items index3 = ListItems.Find(x => x.itemCode == add.itemCode);
+                    if (ListItems.IndexOf(index3) == -1)
+                    {
+                        ListItems.Add(add);
+                    }
+                    else Console.WriteLine("Item code is exist");
                     break;
                 case '2':
                     Console.WriteLine("R\tE\tM\tO\tV\tE");
@@ -244,7 +248,12 @@ namespace QUANLYCUAHANG
                 case '1':
                     Console.WriteLine("A\t\tD\t\tD\t\t");
                     typeProducts add = creatType();
-                    typeData.Add(add);
+                    typeProducts index3 = typeData.Find(x => x.code == add.code);
+                    if (typeData.IndexOf(index3) == -1)
+                    {
+                        typeData.Add(add);
+                    }
+                    else Console.WriteLine("Item code is exist");
                     break;
                 case '2':
                     Console.WriteLine("R\tE\tM\tO\tV\tE");
@@ -344,6 +353,4 @@ namespace QUANLYCUAHANG
         public int code;
         public string typeProduct;
     }
-    
-    
 }
