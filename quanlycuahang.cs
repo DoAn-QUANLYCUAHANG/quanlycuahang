@@ -103,25 +103,31 @@ namespace QUANLYCUAHANG
                 switch (select[1])
                 {
                 case '1':
-                        Console.WriteLine("A\tD\tD\t");
-                        Items add = creatItems();
-                        ListItems.Add(add);
-                        break;
+                    Console.WriteLine("A\tD\tD\t");
+                    Items add = creatItems();
+                    ListItems.Add(add);
+                    break;
                 case '2':
-                        Console.WriteLine("R\tE\tM\tO\tV\tE");
-                        Items remove =  creatItems();
-                        ListItems.RemoveAt(ListItems.IndexOf(remove));
-                        break;
+                    Console.WriteLine("R\tE\tM\tO\tV\tE");
+                    Items items = new Items();
+                    Console.WriteLine("Input the codeItem to remove list item");
+                    items.itemCode = Convert.ToInt32(Console.ReadLine());
+                    Items index = ListItems.Find(x => x.itemCode == items.itemCode);
+                    ListItems.RemoveAt(ListItems.IndexOf(index));
+                    break;
                 case '3':
-                        Console.WriteLine("E\tD\tI\tT");
-                        Items items = creatItems();
-                        ListItems.RemoveAt(ListItems.IndexOf(items));
+                    Console.WriteLine("E\tD\tI\tT");
+                    Items items2 = new Items();
+                    Console.WriteLine("Input the codeItem to edit list item");
+                    items2.itemCode = Convert.ToInt32(Console.ReadLine());
+                    Items index2 = ListItems.Find(x => x.itemCode == items2.itemCode);
+                    ListItems.RemoveAt(ListItems.IndexOf(index2));
                     Console.WriteLine("Input the new infomation");
-                        Items temp = creatItems();
-                        ListItems.Add(temp);
-                        break;
+                    Items temp = creatItems();
+                    ListItems.Add(temp);
+                    break;
                 case '4':
-                    Console.WriteLine("i am coding");
+                    searchItems(ListItems);
                     break;
                 case '5':
                     Console.WriteLine("S\tH\tO\tW");
@@ -153,9 +159,73 @@ namespace QUANLYCUAHANG
             item.typeOfProduct = temp2;
             return item;
         }
-        public static void searchItems(Items items)
+        public static void searchItems(List<Items> listItems)
         {
-
+            Console.WriteLine("Choose the ItemCode or nameItems or...");
+            Console.WriteLine("1.Code");
+            Console.WriteLine("2.Name");
+            Console.WriteLine("3.Company");
+            Console.WriteLine("4.YearOfProducts");
+            Console.WriteLine("5.TypeOfProducts");
+            int choose = Convert.ToInt32(Console.ReadLine());
+            Items temp = new Items();
+            if (choose < 6 && choose > 0)
+            {
+                switch (choose)
+                {
+                    case 1:
+                        Console.WriteLine("input the code");
+                        temp.itemCode = Convert.ToInt32(Console.ReadLine());
+                        List<Items> codeSearch = new List<Items>();
+                        foreach (Items it in listItems)
+                        {
+                            if (it.itemCode == temp.itemCode) codeSearch.Add(it);
+                        }
+                        show(codeSearch);
+                        break;
+                    case 2:
+                        Console.WriteLine("input the Name");
+                        temp.nameItem = Console.ReadLine();
+                        List<Items> nameSearch = new List<Items>();
+                        foreach (Items it in listItems)
+                        {
+                            if (it.nameItem == temp.nameItem) nameSearch.Add(it);
+                        }
+                        show(nameSearch);
+                        break;
+                    case 3:
+                        Console.WriteLine("input the Company");
+                        temp.companyProduct = Console.ReadLine();
+                        List<Items> CompanySearch = new List<Items>();
+                        foreach (Items it in listItems)
+                        {
+                            if (it.companyProduct == temp.companyProduct) CompanySearch.Add(it);
+                        }
+                        show(CompanySearch);
+                        break;
+                    case 4:
+                        Console.WriteLine("input the YearOfProducts");
+                        temp.yearOfProduction = Convert.ToInt32(Console.ReadLine());
+                        List<Items> yearSearch = new List<Items>();
+                        foreach (Items it in listItems)
+                        {
+                            if (it.yearOfProduction == temp.yearOfProduction) yearSearch.Add(it);
+                        }
+                        show(yearSearch);
+                        break;
+                    case 5:
+                        Console.WriteLine("input the TypeOfProducts");
+                        temp.typeOfProduct = Console.ReadLine();
+                        List<Items> typeSearch = new List<Items>();
+                        foreach (Items it in listItems)
+                        {
+                            if (it.typeOfProduct == temp.typeOfProduct) typeSearch.Add(it);
+                        }
+                        show(typeSearch);
+                        break;
+                }
+            }
+            else searchItems(listItems);
         }
         public static void show (List<Items> items)
         {
