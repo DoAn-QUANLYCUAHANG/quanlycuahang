@@ -15,9 +15,14 @@ namespace QUANLYCUAHANG
             while (check)
             {
                 if (select[0] == '1')
-                {
-                    //Items items = new Items();
+                { 
                     resovle(select, ref data);
+                }
+                else if (select[0] == '2') 
+                {
+                    Console.WriteLine("i am coding");
+                    // Tin code in here;
+                    // select[1] = 1, 2, 3, 4, 5, view in the input function.
                 }
                 Console.WriteLine("Do you continues? <Y\t/\tN>");
                 string cha = Console.ReadLine();
@@ -105,12 +110,13 @@ namespace QUANLYCUAHANG
                 case '2':
                         Console.WriteLine("R\tE\tM\tO\tV\tE");
                         Items remove =  creatItems();
-                        ListItems.Remove(remove);
+                        ListItems.RemoveAt(ListItems.IndexOf(remove));
                         break;
                 case '3':
                         Console.WriteLine("E\tD\tI\tT");
                         Items items = creatItems();
-                        ListItems.Remove(items);
+                        ListItems.RemoveAt(ListItems.IndexOf(items));
+                    Console.WriteLine("Input the new infomation");
                         Items temp = creatItems();
                         ListItems.Add(temp);
                         break;
