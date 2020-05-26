@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -8,13 +9,22 @@ namespace QUANLYCUAHANG
     {
         static void Main(string[] args)
         {
+            bool check = true;
             string select = input();
             List<Items> data = new List<Items>();
-            if (select[0] == 1)
+            while (check)
             {
-                Items items = new Items();
-                output(select, items);
-            }
+                if (select[0] == 1)
+                {
+                    Items items = new Items();
+                    data = resovle(select);
+                    show(data);
+                }
+                Console.WriteLine("Do you continues? <Y\t/\tN>");
+                string cha = Console.ReadLine();
+                if (cha != "Y" || cha != "N") Console.WriteLine("Y\t/\tN");
+                else if (cha == "Y") check = false;
+            }  
         }
         public static string input()
         {
@@ -46,8 +56,9 @@ namespace QUANLYCUAHANG
                     Console.WriteLine("2. Remove the item");
                     Console.WriteLine("3. Edit the item");
                     Console.WriteLine("4. Search the item");
+                    Console.WriteLine("5. Show the item");
                     selectItems = Convert.ToInt32(Console.ReadLine());
-                    if (selectItems < 4 && selectItems > 0)
+                    if (selectItems < 5 && selectItems > 0)
                     {
                         check = false;
                     }
@@ -78,60 +89,74 @@ namespace QUANLYCUAHANG
             return select;
         }
 
-        public static void output(string select, Items items)
+        public static List<Items> resovle(string select)
         {
-            Console.WriteLine("{0}",select);
-            if (select[0] == '1')
-            {
+            List<Items> result = new List<Items>();
                 switch (select[1])
                 {
                     case '1':
-                        addItems(items);
-                        break;
+                        List<Items> add = addItems();
+                        return add;
                     case '2':
-                        removeItems(items);
-                        break;
+                        List<Items> remove =  removeItems();
+                        return remove;
                     case '3':
-                        editItems(items);
-                        break;
-                    case '4':
-                        searchItems(items);
-                        break;
-                }
-            }
-            Console.ReadLine();
+                        List<Items> edit = editItems();
+                    return edit;
+                } 
+            return result;
         }
-        public static void addItems(Items items)
+
+        public static Items creatItems()
         {
+            Items item = new Items();
             Console.WriteLine("Input the itemCode");
             int temp1 = Convert.ToInt32(Console.ReadLine());
-            items.itemCode = temp1;
+            item.itemCode = temp1;
             Console.WriteLine("Input the nameItems");
             string temp2 = Console.ReadLine();
-            items.nameItem = temp2;
+            item.nameItem = temp2;
             Console.WriteLine("Input the dataexpiryDate");
             DateTime temp3 = Convert.ToDateTime(Console.ReadLine());
-            items.dataexpiryDate = temp3;
+            item.dataexpiryDate = temp3;
             Console.WriteLine("Input the companyProduct");
             temp2 = Console.ReadLine();
-            items.nameItem = temp2;
+            item.nameItem = temp2;
             Console.WriteLine("Input the typeOfProduct");
             temp1 = Convert.ToInt32(Console.ReadLine());
-            items.itemCode = temp1;
+            item.itemCode = temp1;
             Console.WriteLine("Input the codeTypeOfItems and nameTypeOfItems");
             temp1 = Convert.ToInt32(Console.ReadLine());
             temp2 = Console.ReadLine();
-            items.typeOfProduct.Add(temp1,temp2);
+            item.typeOfProduct.Add(temp1, temp2);
+            return item;
         }
-        public static void removeItems(Items items)
+        public static List<Items> addItems()
         {
+            List<Items> result = new List<Items>();
+            Items items = new Items();
+            items = creatItems();
+            result.Add(items);
+            return result;
+        }
+        public static List<Items> removeItems()
+        {
+            List<Items> result = new List<Items>();
+            Items items = new Items();
+            items = creatItems();
+            result.Remove(items);
+            return result;
+        }
+        public static List<Items> editItems()
+        {
+            List<Items> result = new List<Items>();
+            Items items = new Items();
+            Console.WriteLine("Input the infortiom to edit");
+            result =  removeItems();
+            Console.WriteLine("Update the infortiom to edit");
+            result = addItems();
+            return result;
 
-        }
-        public static void editItems(Items items)
-        {
-            removeItems(items);
-            Console.WriteLine("Input the edit information ");
-            addItems(items);
         }
         public static void searchItems(Items items)
         {
@@ -139,7 +164,12 @@ namespace QUANLYCUAHANG
         }
         public static void show (List<Items> items)
         {
-            
+            Console.WriteLine("I T E M S");
+            Console.WriteLine("Code\t Name\t Dataexpiry\t Company\t Year Of Products\t TypeOfProduct");
+            foreach(Items temp in items)
+            {
+                Console.WriteLine("{0}\t {1}\t {2}\t {3}\t {4}\t {5}",temp.itemCode,temp.nameItem,temp.dataexpiryDate,temp.companyProduct,temp.yearOfProduction,temp.typeOfProduct);
+            }
         }
     }
     class Items
